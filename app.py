@@ -1,5 +1,6 @@
 from utils import database
 
+
 USER_CHOICE = """
 Enter:
 -'a' to add a book
@@ -11,6 +12,7 @@ Enter:
 Your choice: """
 
 def menu():
+    database.create_book_table()
     user_input = input(USER_CHOICE)
     while user_input != 'q':
         if user_input == 'a':
