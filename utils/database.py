@@ -1,6 +1,5 @@
 import sqlite3
 
-book_file = 'books.json'
 
 def create_book_table():
     with sqlite3.connect('data.db') as connection:
@@ -16,8 +15,12 @@ def add_book(name, author):
 
 
 def get_all_books():
-    with open(book_file, 'r') as file:
-        return json.load(file)
+    with sqlite3.connect('data.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM books') #creates a list with tuples
+        #turn into dictionary with list comprehension
+        books = [{'name': row[0], 'author': row[1], 'read': row[2]} for row in cursor.fetchall()]
+    return books
 
 
 def _save_all_books(books):
