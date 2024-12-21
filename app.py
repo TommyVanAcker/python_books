@@ -28,7 +28,10 @@ def menu():
 def prompt_add_book():
     name = input('provide the title of the book: ')
     author = input('provide the author of the book: ')
-    database.add_book(name, author)
+    try:
+        database.add_book(name, author)
+    except:
+        print('you tried to add a book which already exists')
 
 def prompt_list_books():
     books = database.get_all_books()
