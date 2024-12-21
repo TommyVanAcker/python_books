@@ -5,13 +5,14 @@ book_file = 'books.json'
 def create_book_table():
     with sqlite3.connect('data.db') as connection:
         cursor = connection.cursor()
-        cursor.execute('CREATE TABLE books(name text primary key, author text, read integer)')
+        cursor.execute('CREATE TABLE IF NOT EXISTS books(name text primary key, author text, read integer)')
         connection.commit()
 
 def add_book(name, author):
-   books = get_all_books()
-   books.append({'name': name, 'author': author, 'read': False})
-   _save_all_books(books)
+   with sqlite3.connect('data.db') as connection:
+       cursor = connection.cursor()
+       cursor.execute('INSERT INTO books VALUES (?, ?, 0)', (name, author))
+       connection.commit()
 
 
 def get_all_books():
