@@ -33,7 +33,8 @@ def prompt_add_book():
 def prompt_list_books():
     books = database.get_all_books()
     for book in books:
-        print(f"{book['name']} written by {book['author']} has been read: {book['read']} ")
+        read = 'yes' if book['read'] else 'no'
+        print(f"{book['name']} written by {book['author']} has been read: {read} ")
 
 def prompt_read_book():
     name = input("What is the book title you read?: ")

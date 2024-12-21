@@ -23,19 +23,17 @@ def get_all_books():
     return books
 
 
-def _save_all_books(books):
-    with open(book_file, 'w') as file:
-        json.dump(books, file)
 
 def mark_as_read(name):
-    books = get_all_books()
-    for book in books:
-        if book['name'] == name:
-            book['read'] = True
-    _save_all_books(books)
+    with sqlite3.connect('data.db') as connection:
+        cursor = connection.cursor()
+        #the parameter of the execute must be a tuple
+        cursor.execute('UPDATE books SET read=1 WHERE name=?',(name,))
+        connection.commit()
 
 
 def delete_book(name):
-    books = get_all_books()
-    books = [book for book in books if book['name'] != name]
-    _save_all_books(books)
+    with sqlite3.connect('data.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute('DELETE FROM books WHERE name=?', (name,))
+        connection.commit()
