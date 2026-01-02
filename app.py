@@ -1,5 +1,6 @@
 from utils import database
 
+print("creating changes to the database")
 
 USER_CHOICE = """
 Enter:
